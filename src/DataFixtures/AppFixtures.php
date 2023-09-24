@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use DateTime;
 use Faker\Factory;
 use App\Entity\User;
+use Faker\Generator;
 use App\Entity\Livres;
 use App\Entity\Auteurs;
 use Monolog\DateTimeImmutable;
@@ -15,9 +16,10 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $livre = new Livres();
             $livre->setTitre($faker->sentence(3))
                 ->setCategorie($faker->sentence(1))
@@ -41,8 +43,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $user->setEmail($faker->email())
                 ->setPseudo($faker->userName())
-                ->setPassword('password');
-
+                ->setPlainPassword('password');
             $manager->persist($user);
         }
 
