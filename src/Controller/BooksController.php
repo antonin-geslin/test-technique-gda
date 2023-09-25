@@ -1,7 +1,7 @@
 <?php 
 namespace App\Controller;
 
-use App\Repository\LivresRepository;
+use App\Repository\BooksRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class LivresController extends AbstractController
+class BooksController extends AbstractController
 {
     #[Route('/livres', name: 'livres')]
     #[IsGranted('ROLE_USER')]
-    public function index(LivresRepository $repository, PaginatorInterface $paginator, Request $request): Response
+    public function index(BooksRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {
         $livres = $paginator->paginate(
             $repository->findAll(),
@@ -21,11 +21,26 @@ class LivresController extends AbstractController
             10 
         );
 
+        $authorsCollection = [];
+
+        foreach ($livres as $livre) {
+            $authors = $livre->getAuthors();
+            $temp = '';
+            foreach ($authors as $author) {
+                $temp .= $author->getName() . ',';
+            }
+            $authorsCollection[$livre->getId()] = $temp;
+            $temp = '';
+        }
+
+
+
+
         return $this->render('Pages/Livres/index.html.twig', [
-            'livres' => $livres
+            'livres' => $livres,
+            'authors' => $authorsCollection
         ]);
     }
 }
-
 
 ?>

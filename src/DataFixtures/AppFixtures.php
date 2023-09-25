@@ -6,11 +6,12 @@ use DateTime;
 use Faker\Factory;
 use App\Entity\User;
 use Faker\Generator;
-use App\Entity\Livres;
-use App\Entity\Auteurs;
+use App\Entity\Books;
+use App\Entity\Authors;
 use Monolog\DateTimeImmutable;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+
 
 class AppFixtures extends Fixture
 {
@@ -20,21 +21,21 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr_FR');
 
         for ($i = 0; $i < 20; $i++) {
-            $livre = new Livres();
-            $livre->setTitre($faker->sentence(3))
-                ->setCategorie($faker->sentence(1))
-                ->setDatePublication(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-6 months')))
+            $livre = new Books();
+            $livre->setTitle($faker->sentence(3))
+                ->setCategory($faker->sentence(1))
+                ->setPublicationDate(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-6 months')))
                 ->setStock($faker->numberBetween(0, 100));
 
-            for ($j = 0; $j < mt_rand(0, 5); $j++) {
-                $auteur = new Auteurs();
-                $auteur->setNom($faker->name())
+            for ($j = 0; $j < mt_rand(1, 5); $j++) {
+                $auteur = new Authors();
+                $auteur->setName($faker->name())
                     ->setBirthDate(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-50 years', '-20 years')))
-                    ->setBiographie($faker->text(200));
+                    ->setBiography($faker->text(200));
 
-                $auteur->addLivres($livre);
+                $auteur->addBook($livre);
                 $manager->persist($auteur);
-                $livre->addAuteurs($auteur);
+                $livre->addAuthor($auteur);
             }
             $manager->persist($livre);
         }
@@ -46,7 +47,6 @@ class AppFixtures extends Fixture
                 ->setPlainPassword('password');
             $manager->persist($user);
         }
-
         $manager->flush();
     }
 }

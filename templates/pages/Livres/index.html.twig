@@ -18,22 +18,21 @@
 					<th scope="col">Stock</th>
 				</tr>
 			</thead>
-			<tbody>
 
-				{% for livre in livres %}
-					<tr class="table-active">
-						<th scope="row">{{ livre.id }}</th>
-						<td>{{ livre.titre }}</td>
-						<td>test</td>
-						<td>{{ livre.categorie}}</td>
-						<td>{{ livre.datePublication|date('d/m/Y') }}</td>
-						<td>{{ livre.stock }}</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-		<div class="navigation d-flex justify-content-center">
-			{{ knp_pagination_render(livres) }}
-		</div>
-	</div>
-{% endblock %}
+
+			{% for livre in livres %}
+				<tr class="table-active">
+					<th scope="row">{{ livre.id }}</th>
+					<td>{{ livre.title }}</td>
+					<td>{{ authors[livre.id]}}</td>
+					<td>{{ livre.category}}</td>
+					<td>{{ livre.publicationDate|date('d/m/Y') }}</td>
+					<td>{{ livre.stock }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>
+<div class="navigation d-flex justify-content-center">
+	{{ knp_pagination_render(livres) }}
+</div></div>{% endblock %}

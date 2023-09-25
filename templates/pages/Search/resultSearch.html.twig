@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Résultat
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		<h1>Résultat de votre recherche</h1>
+		<table class="table table-hover ">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Titre</th>
+					<th scope="col">Auteurs(s)</th>
+					<th scope="col">Catégorie</th>
+					<th scope="col">Date de publication</th>
+					<th scope="col">Stock</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for livre in book %}
+					<tr class="table-active">
+						<th scope="row">{{ livre.id }}</th>
+						<td>{{ livre.title }}</td>
+						<td>{{ authors }}</td>
+						<td>{{ livre.category }}</td>
+						<td>{{ livre.publicationDate|date('d/m/Y')}}</td>
+						<td>{{ livre.stock }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}
