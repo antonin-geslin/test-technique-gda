@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Books;
 use App\Entity\Borrows;
+use App\Repository\AuthorsRepository;
 use App\Repository\BooksRepository;
 use App\Repository\BorrowsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class BooksController extends AbstractController
 {
@@ -119,6 +121,19 @@ class BooksController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('show.borrows');
+    }
+
+    #[Route('/authors/{authorName}', name: 'show.author')]
+    public function displayAuthors($authorName, AuthorsRepository $repository): Response
+    {
+        $author = $repository->searchByName($authorName);
+
+        $books = $author[0]->getBooks();
+        
+        return $this->render('Pages/Livres/author.html.twig',[
+            'author' => $author,
+            'books' => $books
+        ]);
     }
 }
 

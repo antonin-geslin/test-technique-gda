@@ -20,19 +20,31 @@ class AppFixtures extends Fixture
     {
         
         $faker = Factory::create('fr_FR');
+        $category = [
+            "Science-fiction",
+            "Fantasy",
+            "Roman policier",
+            "Drame",
+            "Bande-dessinée",
+            "Horreur",
+            "Biographie",
+            "Aventure",
+            "Science",
+            "Romance"
+        ];
 
         for ($i = 0; $i < 20; $i++) {
             $livre = new Books();
             $livre->setTitle($faker->sentence(3))
-                ->setCategory($faker->sentence(1))
-                ->setPublicationDate(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-6 months')))
+                ->setCategory($category[mt_rand(0, 9)])
+                ->setPublicationDate(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-30 years', '-6 months')))
                 ->setStock($faker->numberBetween(0, 100));
 
             for ($j = 0; $j < mt_rand(1, 5); $j++) {
                 $auteur = new Authors();
                 $auteur->setName($faker->name())
-                    ->setBirthDate(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-50 years', '-20 years')))
-                    ->setBiography($faker->text(200));
+                    ->setBirthDate(DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-70 years', '-20 years')))
+                    ->setBiography($faker->text(3000));
 
                 $auteur->addBook($livre);
                 $manager->persist($auteur);
@@ -47,12 +59,6 @@ class AppFixtures extends Fixture
                 ->setPseudo($faker->userName())
                 ->setPlainPassword('password');
             $manager->persist($user);
-        }
-        for ($j = 0; $j < mt_rand(1, 5); $j++) {
-            $borrow = new Borrows();
-            $borrow->setBook($livre->getTitle())
-                ->setUser($user);
-            $manager->persist($borrow);
         }
         $manager->flush();
     }

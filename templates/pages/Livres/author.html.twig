@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Bibliothèque - Auteurs
+{% endblock %}
+
+
+{% block body %}
+	<div class="container mt-4">
+		<h1>{{author[0].name}}</h1>
+		<p>{{author[0].birthDate|date("d/m/Y")}}</p>
+		<p>{{author[0].biography}}</p>
+		<h2>Les livres de
+			{{author[0].name}}</h2>
+		{% for book in books %}
+			<li>{{book.title}}</li>
+		{% endfor %}
+	</div>
+
+{% endblock %}
