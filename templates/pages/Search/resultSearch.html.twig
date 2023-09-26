@@ -18,21 +18,26 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for book in books %}
-					<tr class="table-active">
-						<th scope="row">{{ book.id }}</th>
-						<td>{{ book.title }}</td>
-						<td>{{ authors }}</td>
-						<td>{{ book.category }}</td>
-						<td>{{ book.publicationDate|date('d/m/Y')}}</td>
-						<td>{{ book.stock }}</td>
-						{% if book.stock > 0 %}
-							<td>
-								<a href="{{ path('make.borrow', {'bookId': book.id}) }}" class=" btn btn-primary">Emprunter</a>
-							</td>
-						{% endif %}
-					</tr>
-				{% endfor %}
+				<tr class="table-active">
+					<th scope="row">{{ book[0].id }}</th>
+					<td>{{ book[0].title }}</td>
+					{% set foo = authors|split(",") %}
+					<td>
+						{% for author in foo %}
+							{% if author is not empty %}
+								<a href="{{ path('show.author', {'authorName': author}) }}">{{author}}</a>
+							{% endif %}
+						{% endfor %}
+					</td>
+					<td>{{ book[0].category }}</td>
+					<td>{{ book[0].publicationDate|date('d/m/Y')}}</td>
+					<td>{{ book[0].stock }}</td>
+					{% if book[0].stock > 0 %}
+						<td>
+							<a href="{{ path('make.borrow', {'bookId': book[0].id}) }}" class=" btn btn-primary">Emprunter</a>
+						</td>
+					{% endif %}
+				</tr>
 			</tbody>
 		</table>
 		<a href="{{ path('search') }}" type="submit" class="btn btn-primary mt-4">Autre recherche</a>

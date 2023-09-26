@@ -126,14 +126,17 @@ class BooksController extends AbstractController
     #[Route('/authors/{authorName}', name: 'show.author')]
     public function displayAuthors($authorName, AuthorsRepository $repository): Response
     {
+        $authorName = trim($authorName);
         $author = $repository->searchByName($authorName);
 
+;
         $books = $author[0]->getBooks();
-        
+    
         return $this->render('Pages/Livres/author.html.twig',[
             'author' => $author,
             'books' => $books
         ]);
+
     }
 }
 

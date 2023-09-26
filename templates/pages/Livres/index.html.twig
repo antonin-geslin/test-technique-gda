@@ -41,7 +41,8 @@
 						</td>
 					{% endif %}
 				</tr>
-			</td>
-		</tr>
-	{% endfor %}
-</tbody></tbody></table><div class="navigation d-flex justify-content-center">{{ knp_pagination_render(books) }}</div></div>{% endblock %}
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>
+<div class="navigation d-flex justify-content-center">{{ knp_pagination_render(books) }}</div></div>{% endblock %}

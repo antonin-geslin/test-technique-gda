@@ -22,7 +22,7 @@ class SearchController extends AbstractController
             $term = $form->getData()['query'];
             $book = $repository->searchByTitle($term);
             $temps = $book[0]->getAuthors();
-            $authors = ' ';
+            $authors = '';
             foreach ($temps as $temp){
                 $authors .= $temp->getName() . ', ';
             }
