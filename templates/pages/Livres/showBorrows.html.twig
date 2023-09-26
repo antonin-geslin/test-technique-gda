@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}Bibliothèque - Mes emprunts
+{% endblock %}
+
+
+{% block body %}
+	<div class="container mt-4">
+		<h1>Mes emprunts</h1>
+		<table class="table table-hover ">
+			<thead>
+				<tr>
+					<th scope="col">Titre</th>
+					<th scope="col">Date d'emprunt</th>
+					<th scope="col">Date de retour</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for borrow in borrows %}
+					<tr class="table-active">
+						<td>{{ borrow.book }}</td>
+						<td>{{ borrow.borrowDate|date('d/m/Y')}}</td>
+						<td>{{ borrow.returnDate|date('d/m/Y')}}</td>
+						<td>
+							<a href="{{ path('return.borrow', {'borrowId': borrow.id}) }}" type="submit" class="btn btn-primary">Rendre le livre</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<a href="{{ path('livres') }}" type="submit" class="btn btn-primary mt-4">Emprunter un livre</a>
+	</div>
+{% endblock %}

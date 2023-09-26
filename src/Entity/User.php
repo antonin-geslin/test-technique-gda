@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -47,9 +49,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $dateCreation = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Borrows::class)]
+    private Collection $borrows;
+
+
     public function __construct()
     {
         $this->dateCreation = new \DateTimeImmutable();
+        $this->borrows = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,6 +161,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDateCreation(\DateTimeImmutable $dateCreation): static
     {
         $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Borrows>
+     */
+    public function getBorrows(): Collection
+    {
+        return $this->borrows;
+    }
+
+    public function addBorrow(Borrows $borrow): static
+    {
+        if (!$this->borrows->contains($borrow)) {
+            $this->borrows->add($borrow);
+            $borrow->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBorrow(Borrows $borrow): static
+    {
+        if ($this->borrows->removeElement($borrow)) {
+            // set the owning side to null (unless already changed)
+            if ($borrow->getUser() === $this) {
+                $borrow->setUser(null);
+            }
+        }
 
         return $this;
     }

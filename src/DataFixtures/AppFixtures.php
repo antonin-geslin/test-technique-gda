@@ -8,6 +8,7 @@ use App\Entity\User;
 use Faker\Generator;
 use App\Entity\Books;
 use App\Entity\Authors;
+use App\Entity\Borrows;
 use Monolog\DateTimeImmutable;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -46,6 +47,12 @@ class AppFixtures extends Fixture
                 ->setPseudo($faker->userName())
                 ->setPlainPassword('password');
             $manager->persist($user);
+        }
+        for ($j = 0; $j < mt_rand(1, 5); $j++) {
+            $borrow = new Borrows();
+            $borrow->setBook($livre->getTitle())
+                ->setUser($user);
+            $manager->persist($borrow);
         }
         $manager->flush();
     }

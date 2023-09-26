@@ -37,6 +37,7 @@ class Books
     #[ORM\ManyToMany(targetEntity: Authors::class, inversedBy: 'books')]
     private Collection $authors;
 
+
     public function __construct()
     {
         $this->authors = new ArrayCollection();
@@ -118,4 +119,5 @@ class Books
 
         return $this;
     }
+
 }

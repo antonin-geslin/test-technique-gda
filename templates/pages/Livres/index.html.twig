@@ -1,12 +1,12 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Les livres
+{% block title %}Les books
 {% endblock %}
 
 
 {% block body %}
 	<div class="container mt-4">
-		<h1>Les livres</h1>
+		<h1>Les books</h1>
 		<table class="table table-hover ">
 			<thead>
 				<tr>
@@ -20,19 +20,24 @@
 			</thead>
 
 
-			{% for livre in livres %}
+			{% for book in books %}
 				<tr class="table-active">
-					<th scope="row">{{ livre.id }}</th>
-					<td>{{ livre.title }}</td>
-					<td>{{ authors[livre.id]}}</td>
-					<td>{{ livre.category}}</td>
-					<td>{{ livre.publicationDate|date('d/m/Y') }}</td>
-					<td>{{ livre.stock }}</td>
+					<th scope="row">{{ book.id }}</th>
+					<td>{{ book.title }}</td>
+					<td>{{ authors[book.id]}}</td>
+					<td>{{ book.category}}</td>
+					<td>{{ book.publicationDate|date('d/m/Y') }}</td>
+					<td>{{ book.stock }}</td>
+					{% if book.stock > 0 %}
+						<td>
+							<a href="{{ path('make.borrow', {'bookId': book.id}) }}" class=" btn btn-primary">Emprunter</a>
+						</td>
+					{% endif %}
 				</tr>
 			{% endfor %}
 		</tbody>
 	</tbody>
 </table>
 <div class="navigation d-flex justify-content-center">
-	{{ knp_pagination_render(livres) }}
+	{{ knp_pagination_render(books) }}
 </div></div>{% endblock %}
