@@ -1,4 +1,4 @@
-![App Screenshot]https://user-images.githubusercontent.com/115146768/270640871-5b29ea34-4d7a-41b6-a4ac-5caf82d14039.png
+![App Screenshot](https://user-images.githubusercontent.com/115146768/270640871-5b29ea34-4d7a-41b6-a4ac-5caf82d14039.png)
 
 ## Documentation
 
