@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Repository\BooksRepository;
-use App\Form\SearchType;
+use App\Form\SearchTypeU;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +15,7 @@ class SearchController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function recherche(BooksRepository $repository, Request $request): Response
     {
-        $form = $this->createForm(SearchType::class);
+        $form = $this->createForm(SearchTypeU::class);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
