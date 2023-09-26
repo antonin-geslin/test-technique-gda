@@ -1,4 +1,4 @@
-![Alt text](/Capture d’écran 2023-09-26 à 13.23.48.png")
+![App Screenshot](/Capture d’écran 2023-09-26 à 13.23.48.png")
 
 ## Documentation
 
