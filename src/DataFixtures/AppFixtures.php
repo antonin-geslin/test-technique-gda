@@ -33,7 +33,7 @@ class AppFixtures extends Fixture
             "Romance"
         ];
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $livre = new Books();
             $livre->setTitle($faker->sentence(3))
                 ->setCategory($category[mt_rand(0, 9)])
